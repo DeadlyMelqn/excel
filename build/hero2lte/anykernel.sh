@@ -38,6 +38,15 @@ dump_boot;
 
 insert_line default.prop "ro.sys.sdcardfs=false" after "debug.atrace.tags.enableflags=0" "ro.sys.sdcardfs=false";
 
+# default.prop
+patch_prop default.prop "ro.secure" "0";
+patch_prop default.prop "ro.adb.secure" "0";
+patch_prop default.prop "ro.debuggable" "1";
+patch_prop default.prop "persist.sys.usb.config" "mtp,adb";
+insert_line default.prop "persist.service.adb.enable=1" after "persist.sys.usb.config=mtp,adb" "persist.service.adb.enable=1";
+insert_line default.prop "persist.service.debuggable=1" after "persist.service.adb.enable=1" "persist.service.debuggable=1";
+insert_line default.prop "persist.adb.notify=0" after "persist.service.debuggable=1" "persist.adb.notify=0";
+
 # end ramdisk changes
 
 write_boot;
