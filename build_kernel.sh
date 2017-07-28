@@ -48,6 +48,35 @@ FUNC_CLEAN_ENVIRONMENT()
 	exit 1
 }
 
+FUNC_CUSTOM_CLEAN()
+{
+	tput reset
+
+	echo ""
+	echo "=================================================================="
+	echo "START : FUNC_CUSTOM_CLEAN"
+	echo "=================================================================="
+	echo ""
+
+	echo "Deleting log files..."
+	rm -f cfp_log.txt
+	rm -f build_kernel.log
+	rm -f build/herolte/.version
+	rm -f build/hero2lte/.version
+	echo ""
+	echo "Deleting patch related leftovers..."
+	rm -rf *.patch
+	rm -rf *.diff
+
+	echo ""
+	echo "=================================================================="
+	echo "END   : FUNC_CUSTOM_CLEAN"
+	echo "=================================================================="
+	echo ""
+
+	exit 1
+}
+
 FUNC_UNKNOWN_INPUT()
 {
 	tput reset
@@ -64,6 +93,7 @@ FUNC_UNKNOWN_INPUT()
 	echo "1 - to build for herolteeur"
 	echo "2 - to build for hero2lteeur"
 	echo ""
+	echo "9 - to run the custom cleaning routine"
 	echo "0 - to clean the build environment"
 	echo ""
 	echo "=================================================================="
@@ -76,6 +106,8 @@ FUNC_UNKNOWN_INPUT()
 
 if [ $1 == 0 ]; then
 	FUNC_CLEAN_ENVIRONMENT
+elif [ $1 == 9 ]; then
+	FUNC_CUSTOM_CLEAN
 elif [ $1 == 1 ]; then
 	export MODEL=herolte
 elif [ $1 == 2 ]; then
