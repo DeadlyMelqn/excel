@@ -28,7 +28,8 @@ is_slot_device=0;
 
 ## AnyKernel permissions
 # set permissions for included ramdisk files
-# permission settings will be added here
+chmod 750 $ramdisk/init.services.rc
+chmod 750 $ramdisk/sbin/sysinit.sh
 
 
 ## AnyKernel install
@@ -37,6 +38,9 @@ dump_boot;
 # begin ramdisk changes
 
 insert_line default.prop "ro.sys.sdcardfs=false" after "debug.atrace.tags.enableflags=0" "ro.sys.sdcardfs=false";
+
+# init.samsungexynos8890.rc
+insert_line init.samsungexynos8890.rc "import init.services.rc" after "import init.remove_recovery.rc" "import init.services.rc";
 
 # end ramdisk changes
 
