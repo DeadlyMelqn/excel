@@ -295,6 +295,7 @@ FUNC_BUILD_ZIP()
 }
 
 # MAIN FUNCTION
+rm -rf ./build_kernel.log
 (
 	tput reset
 
