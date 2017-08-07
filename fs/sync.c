@@ -21,8 +21,8 @@
 #include <linux/statfs.h>
 #endif
 
-bool fsync_enabled = true;
-module_param(fsync_enabled, bool, 0755);
+bool fsync_enabled = false;
+module_param(fsync_enabled, bool, 0644);
 
 #define VALID_FLAGS (SYNC_FILE_RANGE_WAIT_BEFORE|SYNC_FILE_RANGE_WRITE| \
 			SYNC_FILE_RANGE_WAIT_AFTER)
