@@ -704,7 +704,7 @@ static ssize_t set_max_lock_dvfs(struct device *dev, struct device_attribute *at
 			return -ENOENT;
 		}
 
-			clock = platform->gpu_max_clock;
+		clock = platform->gpu_max_clock;
 
 		platform->user_max_lock_input = clock;
 
