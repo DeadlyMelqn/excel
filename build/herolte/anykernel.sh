@@ -28,7 +28,7 @@ is_slot_device=0;
 
 ## AnyKernel permissions
 # set permissions for included ramdisk files
-
+chmod 644 $ramdisk/fstab.samsungexynos8890
 
 ## AnyKernel install
 dump_boot;
