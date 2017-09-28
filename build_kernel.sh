@@ -16,9 +16,9 @@
 #
 
 KERNEL_NAME="Prophecy_Kernel"
-KERNEL_VERSION="1.0.0"
+KERNEL_VERSION="1.0.1"
 KERNEL_REVISION="0"
-KERNEL_BETA="1"
+KERNEL_BETA="0"
 
 export ARCH=arm64
 export BUILD_JOB_NUMBER=$(grep processor /proc/cpuinfo | wc -l)
