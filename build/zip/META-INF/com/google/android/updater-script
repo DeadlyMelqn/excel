@@ -122,16 +122,13 @@ set_progress(0.50);
 
 # RAMDISK PATCHES
 # ---------------
-if file_getprop("/tmp/aroma/patch.prop","install") == "1"
-then
-	ui_print(" ");
-	ui_print("@Patching Ramdisk");
-	package_extract_dir("tgpkernel/anykernel2", "/tmp/ak2");
-	set_perm_recursive(0, 0, 0777, 0777, "/tmp/ak2");
-	run_program("/sbin/busybox", "unzip", "/tmp/ak2/anykernel2.zip", "META-INF/com/google/android/*", "-d", "/tmp/ak2");
-	run_program("/sbin/sh", "/tmp/ak2/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/ak2/anykernel2.zip");
-	delete_recursive("/tmp/ak2");
-endif;
+ui_print(" ");
+ui_print("@Patching Ramdisk");
+package_extract_dir("tgpkernel/anykernel2", "/tmp/ak2");
+set_perm_recursive(0, 0, 0777, 0777, "/tmp/ak2");
+run_program("/sbin/busybox", "unzip", "/tmp/ak2/anykernel2.zip", "META-INF/com/google/android/*", "-d", "/tmp/ak2");
+run_program("/sbin/sh", "/tmp/ak2/META-INF/com/google/android/update-binary", "dummy", "1", "/tmp/ak2/anykernel2.zip");
+delete_recursive("/tmp/ak2");
 
 set_progress(0.60);
 
