@@ -68,8 +68,6 @@ replace_string fstab.ranchu "/dev/block/vda                                     
 
 # Ramdisk changes - init.rc
 insert_line init.rc "import /init.services.rc" after "import /init.fac.rc" "import /init.services.rc";
-insert_line init.rc "    start kernelinit" after "    start iod" "    start kernelinit";
-insert_line init.rc "service kernelinit" after "    restart surfaceflinger" "\n# Kernel script\nservice kernelinit /sbin/kernelinit.sh\n    class main\n    user root\n    seclabel u:r:init:s0\n    oneshot\n    disabled";
 
 # Ramdisk changes - init.samsungexynos8890.rc
 insert_line init.samsungexynos8890.rc "    mount f2fs /dev/block/platform/155a0000.ufs/by-name/SYSTEM /system wait ro" after "    mount ext4 /dev/block/platform/155a0000.ufs/by-name/SYSTEM /system wait ro" "    mount f2fs /dev/block/platform/155a0000.ufs/by-name/SYSTEM /system wait ro";
