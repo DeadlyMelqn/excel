@@ -104,7 +104,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	GOVERNOR_BIG=`cat /tmp/aroma/governor-big.prop`
 	if [[ "$GOVERNOR_BIG" != "interactive" ]]; then
 		ui_print "- Setting CPU Big Freq Governor to $GOVERNOR_BIG";
-		insert_line sbin/sysinit.sh "echo $GOVERNOR_BIG > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor" after "# Advanced Mods" "echo $GOVERNOR_BIG > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor";
+		insert_line sbin/sysinit.sh "echo $GOVERNOR_BIG > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor" after "# Customisations" "echo $GOVERNOR_BIG > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor";
 	fi
 
 # Ramdisk changes for CPU Governors (Little)
@@ -112,7 +112,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	GOVERNOR_LITTLE=`cat /tmp/aroma/governor-little.prop`
 	if [[ "$GOVERNOR_LITTLE" != "interactive" ]]; then
 		ui_print "- Setting CPU Little Freq Governor to $GOVERNOR_LITTLE";
-		insert_line sbin/sysinit.sh "echo $GOVERNOR_LITTLE > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor" after "# Advanced Mods" "echo $GOVERNOR_LITTLE > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
+		insert_line sbin/sysinit.sh "echo $GOVERNOR_LITTLE > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor" after "# Customisations" "echo $GOVERNOR_LITTLE > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
 	fi
 
 # Ramdisk changes for CPU Max Freq (Big)
@@ -121,7 +121,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	if [[ "$CPUMAX_BIG" != "2288" ]]; then
 		ui_print "- Setting CPU Big Max Freq to $CPUMAX_BIG Mhz";
 		WORKVAL1=$CPUMAX_BIG$ZEROS
-		insert_line sbin/sysinit.sh "echo $WORKVAL1 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq" after "# Advanced Mods" "echo $WORKVAL1 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq";
+		insert_line sbin/sysinit.sh "echo $WORKVAL1 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq" after "# Customisations" "echo $WORKVAL1 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq";
 	fi
 
 # Ramdisk changes for CPU Min Freq (Big)
@@ -130,7 +130,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	if [[ "$CPUMIN_BIG" != "208" ]]; then
 		ui_print "- Setting CPU Big Min Freq to $CPUMIN_BIG Mhz";
 		WORKVAL2=$CPUMIN_BIG$ZEROS
-		insert_line sbin/sysinit.sh "echo $WORKVAL2 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq" after "# Advanced Mods" "echo $WORKVAL2 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq";
+		insert_line sbin/sysinit.sh "echo $WORKVAL2 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq" after "# Customisations" "echo $WORKVAL2 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq";
 	fi
 
 # Ramdisk changes for CPU Max Freq (Little)
@@ -139,7 +139,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	if [[ "$CPUMAX_LITTLE" != "1586" ]]; then
 		ui_print "- Setting CPU Little Max Freq to $CPUMAX_LITTLE Mhz";
 		WORKVAL3=$CPUMAX_LITTLE$ZEROS
-		insert_line sbin/sysinit.sh "echo $WORKVAL3 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq" after "# Advanced Mods" "echo $WORKVAL3 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq";
+		insert_line sbin/sysinit.sh "echo $WORKVAL3 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq" after "# Customisations" "echo $WORKVAL3 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq";
 	fi
 
 # Ramdisk changes for CPU Min Freq (Little)
@@ -148,7 +148,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	if [[ "$CPUMIN_LITTLE" != "130" ]]; then
 		ui_print "- Setting CPU Little Min Freq to $CPUMIN_LITTLE Mhz";
 		WORKVAL4=$CPUMIN_LITTLE_ZEROS
-		insert_line sbin/sysinit.sh "echo $WORKVAL4 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq" after "# Advanced Mods" "echo $WORKVAL4 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq";
+		insert_line sbin/sysinit.sh "echo $WORKVAL4 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq" after "# Customisations" "echo $WORKVAL4 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq";
 	fi
 
 # Ramdisk changes for GPU Max Freq
@@ -156,7 +156,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	GPUMAX=`cat /tmp/aroma/gpumax.prop`
 	if [[ "$GPUMAX" != "650" ]]; then
 		ui_print "- Setting Max GPU Freq to $GPUMAX Mhz";
-		insert_line sbin/sysinit.sh "echo $GPUMAX > /sys/devices/14ac0000.mali/max_clock" after "# Advanced Mods" "echo $GPUMAX > /sys/devices/14ac0000.mali/max_clock";
+		insert_line sbin/sysinit.sh "echo $GPUMAX > /sys/devices/14ac0000.mali/max_clock" after "# Customisations" "echo $GPUMAX > /sys/devices/14ac0000.mali/max_clock";
 	fi
 
 # Ramdisk changes for GPU Min Freq
@@ -164,7 +164,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	GPUMIN=`cat /tmp/aroma/gpumin.prop`
 	if [[ "$GPUMIN" != "260" ]]; then
 		ui_print "- Setting Min  GPU Freq to $GPUMIN Mhz";
-		insert_line sbin/sysinit.sh "echo $GPUMIN > /sys/devices/14ac0000.mali/min_clock" after "# Advanced Mods" "echo $GPUMIN > /sys/devices/14ac0000.mali/min_clock";
+		insert_line sbin/sysinit.sh "echo $GPUMIN > /sys/devices/14ac0000.mali/min_clock" after "# Customisations" "echo $GPUMIN > /sys/devices/14ac0000.mali/min_clock";
 	fi
 
 # Ramdisk changes for IO Schedulers (Internal)
@@ -172,7 +172,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	SCHEDULER_INTERNAL=`cat /tmp/aroma/scheduler-internal.prop`
 	if [[ "$SCHEDULER_INTERNAL" != "cfq" ]]; then
 		ui_print "- Setting Internal IO Scheduler to $SCHEDULER_INTERNAL";
-		insert_line sbin/sysinit.sh "echo $SCHEDULER_INTERNAL > /sys/block/sda/queue/scheduler" after "# Advanced Mods" "echo $SCHEDULER_INTERNAL > /sys/block/sda/queue/scheduler";
+		insert_line sbin/sysinit.sh "echo $SCHEDULER_INTERNAL > /sys/block/sda/queue/scheduler" after "# Customisations" "echo $SCHEDULER_INTERNAL > /sys/block/sda/queue/scheduler";
 	fi
 
 # Ramdisk changes for IO Schedulers (External)
@@ -180,7 +180,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	SCHEDULER_EXTERNAL=`cat /tmp/aroma/scheduler-external.prop`
 	if [[ "$SCHEDULER_EXTERNAL" != "cfq" ]]; then
 		ui_print "- Setting External IO Scheduler to $SCHEDULER_EXTERNAL";
-		insert_line sbin/sysinit.sh "echo $SCHEDULER_EXTERNAL > /sys/block/mmcblk0/queue/scheduler" after "# Advanced Mods" "echo $SCHEDULER_EXTERNAL > /sys/block/mmcblk0/queue/scheduler";
+		insert_line sbin/sysinit.sh "echo $SCHEDULER_EXTERNAL > /sys/block/mmcblk0/queue/scheduler" after "# Customisations" "echo $SCHEDULER_EXTERNAL > /sys/block/mmcblk0/queue/scheduler";
 	fi
 
 # Ramdisk changes for TCP Congestion Algorithms
@@ -188,7 +188,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	TCP=`cat /tmp/aroma/tcp.prop`
 	if [[ "$TCP" != "bic" ]]; then
 		ui_print "- Setting TCP Congestion Algorithm to $TCP";
-		insert_line sbin/sysinit.sh "echo $TCP > /proc/sys/net/ipv4/tcp_congestion_control" after "# Advanced Mods" "echo $TCP > /proc/sys/net/ipv4/tcp_congestion_control";
+		insert_line sbin/sysinit.sh "echo $TCP > /proc/sys/net/ipv4/tcp_congestion_control" after "# Customisations" "echo $TCP > /proc/sys/net/ipv4/tcp_congestion_control";
 	fi
 
 fi
