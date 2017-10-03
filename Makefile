@@ -413,8 +413,7 @@ KBUILD_CPPFLAGS := -D__KERNEL__
 KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
-		   -Wno-format-security -Wno-logical-not-parentheses \
-		   -mtune=cortex-a72.cortex-a53 \
+		   -Wno-format-security \
 		   -std=gnu89
 
 KBUILD_AFLAGS_KERNEL :=
@@ -638,15 +637,7 @@ all: vmlinux
 include $(srctree)/arch/$(SRCARCH)/Makefile
 
 KBUILD_CFLAGS	+= $(call cc-option,-fno-delete-null-pointer-checks,)
-KBUILD_CFLAGS	+= $(call cc-disable-warning,frame-address,)
-KBUILD_CFLAGS	+= $(call cc-disable-warning, format-truncation)
-KBUILD_CFLAGS	+= $(call cc-disable-warning, format-overflow)
-KBUILD_CFLAGS	+= $(call cc-disable-warning, int-in-bool-context)
-KBUILD_CFLAGS	+= $(call cc-option,-fno-PIE)
-KBUILD_AFLAGS	+= $(call cc-option,-fno-PIE)
 KBUILD_CFLAGS	+= $(call cc-disable-warning,maybe-uninitialized,)
-KBUILD_CFLAGS	+= $(call cc-disable-warning,array-bounds,)
-KBUILD_CFLAGS	+= $(call cc-disable-warning,unused-const-variable,)
 
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= -Os $(call cc-disable-warning,maybe-uninitialized,)
