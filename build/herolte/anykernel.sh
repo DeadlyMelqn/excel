@@ -31,6 +31,7 @@ is_slot_device=0;
 chmod 750 $ramdisk/init.services.rc
 chmod 750 $ramdisk/sbin/sepolicy.sh
 chmod 750 $ramdisk/sbin/sysinit.sh
+chmod 750 $ramdisk/fstab.samsungexynos8890
 
 
 ## AnyKernel install
@@ -48,4 +49,3 @@ insert_line init.samsungexynos8890.rc "import init.services.rc" after "import in
 write_boot;
 
 ## end install
-
