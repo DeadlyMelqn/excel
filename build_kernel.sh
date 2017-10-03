@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Kernel Build Script v4.0
+# Kernel Build Script v4.3 - AOSP
 #
 # Copyright (C) 2017 Michele Beccalossi <beccalossi.michele@gmail.com>
 #
@@ -105,8 +105,8 @@ FUNC_UNKNOWN_INPUT()
 	echo ""
 	echo "Currently available options are:"
 	echo ""
-	echo "1 - to build for herolteeur"
-	echo "2 - to build for hero2lteeur"
+	echo "1 - to build for herolte"
+	echo "2 - to build for hero2lte"
 	echo ""
 	echo "9 - to run the custom cleaning routine"
 	echo "0 - to clean the build environment"
@@ -130,7 +130,6 @@ elif [ $1 == 2 ]; then
 else
 	FUNC_UNKNOWN_INPUT
 fi
-export VARIANT=eur
 
 if [ $KERNEL_BETA == 1 ]; then
 	KERNEL_VERSION+=β
@@ -143,7 +142,7 @@ if ! [ $(whoami) == kylothow ] || ! [ $(hostname) == xda-developers ]; then
 fi
 export LOCALVERSION=-${KERNEL_NAME}-v${KERNEL_VERSION}
 
-KERNEL_DEFCONFIG=prophecy-${MODEL}${VARIANT}_defconfig
+KERNEL_DEFCONFIG=prophecy-${MODEL}_defconfig
 
 PAGE_SIZE=2048
 DTB_PADDING=0
@@ -189,9 +188,9 @@ FUNC_CLEAN()
 		echo -e "◊ Deleting dtb in:\n $ZIPDIR/"
 		rm $ZIPDIR/dtb
 	fi
-	if [ -a $EXTDIR/*-$MODEL$VARIANT.zip ]; then
-		echo -e "◊ Deleting zip for $MODEL$VARIANT in:\n $EXTDIR"
-		rm $EXTDIR/*-$MODEL$VARIANT.zip
+	if [ -a $EXTDIR/*-$MODEL.zip ]; then
+		echo -e "◊ Deleting zip for $MODEL in:\n $EXTDIR"
+		rm $EXTDIR/*-$MODEL.zip
 	fi
 
 	echo ""
@@ -209,12 +208,12 @@ FUNC_BUILD_DTIMAGE_TARGET()
 	echo "=================================================================="
 	echo ""
 
-	if [ $MODEL == herolte ] && [ $VARIANT == eur ]; then
+	if [ $MODEL == herolte ]; then
 		DTSFILES="exynos8890-herolte_eur_open_00 exynos8890-herolte_eur_open_01
 				exynos8890-herolte_eur_open_02 exynos8890-herolte_eur_open_03
 				exynos8890-herolte_eur_open_04 exynos8890-herolte_eur_open_08
 				exynos8890-herolte_eur_open_09"
-	elif [ $MODEL == hero2lte ] && [ $VARIANT == eur ]; then
+	elif [ $MODEL == hero2lte ]; then
 		DTSFILES="exynos8890-hero2lte_eur_open_00 exynos8890-hero2lte_eur_open_01
 				exynos8890-hero2lte_eur_open_03 exynos8890-hero2lte_eur_open_04
 				exynos8890-hero2lte_eur_open_08"
@@ -254,7 +253,6 @@ FUNC_BUILD_KERNEL()
 	echo ""
 	echo "◊ Build defconfig:	$KERNEL_DEFCONFIG"
 	echo "◊ Build model:		$MODEL"
-	echo "◊ Build variant:	$VARIANT"
 
 	echo ""
 	echo "◊ Generating kernel config..."
@@ -298,9 +296,9 @@ FUNC_BUILD_ZIP()
 		mkdir $EXTDIR
 	fi
 	cd $ZIPDIR
-	echo "=> Output: $EXTDIR/${KERNEL_NAME}-v${KERNEL_VERSION}${BUILD_TYPE}-${MODEL}${VARIANT}.zip"
+	echo "=> Output: $EXTDIR/${KERNEL_NAME}-v${KERNEL_VERSION}${BUILD_TYPE}-${MODEL}.zip"
 	echo ""
-	zip -r9 $EXTDIR/${KERNEL_NAME}-v${KERNEL_VERSION}${BUILD_TYPE}-${MODEL}${VARIANT}.zip * .version -x modules/\* -x patch/\* -x ramdisk/\*
+	zip -r9 $EXTDIR/${KERNEL_NAME}-v${KERNEL_VERSION}${BUILD_TYPE}-${MODEL}.zip * .version -x modules/\* -x patch/\* -x ramdisk/\*
 
 	echo ""
 	echo "=================================================================="
