@@ -15,10 +15,10 @@
 # GNU General Public License for more details.
 #
 
-KERNEL_NAME="Prophecy_Kernel"
-KERNEL_VERSION="1.0.1"
+KERNEL_NAME="Excel_Kernel"
+KERNEL_VERSION="1.0.0"
 KERNEL_REVISION="1"
-KERNEL_BETA="0"
+KERNEL_BETA="1"
 
 export ARCH=arm64
 export BUILD_JOB_NUMBER=$(grep processor /proc/cpuinfo | wc -l)
@@ -325,6 +325,6 @@ rm -rf ./build_kernel.log
 	let "ELAPSED_TIME=$END_TIME-$START_TIME"
 	echo "◊ Total kernel compile time was $COMPILE_TIME seconds."
 	echo "◊ Total build time was $ELAPSED_TIME seconds."
-	echo ""
+	echo "Thanks to kylo for build script!"
 ) 2>&1 | tee -a ./build_kernel.log
 sed -i '1s/.*//' ./build_kernel.log

@@ -119,4 +119,5 @@ ui_print " ";
 ui_print "Done!";
 ui_print " ";
 ui_print "==================================================";
-ui_print " ";
+ui_print "Really huge thanks to kylothow, djb77, everyone for guiding me";
+ui_print "I couldn't have done it without them!";

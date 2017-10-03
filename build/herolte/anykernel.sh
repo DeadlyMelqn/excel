@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() {
-kernel.string=Primal Kernel by kylothow @ xda-developers
+kernel.string=Excel Kernel by Yuv
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
