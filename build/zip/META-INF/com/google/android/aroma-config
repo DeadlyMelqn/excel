@@ -1,5 +1,5 @@
 # -------------------------------
-# TGPKERNEL AROMA INSTALLER v2.04
+# TGPKERNEL AROMA INSTALLER v2.07
 # aroma-config portion
 #
 # Created by djb77 from XDA
@@ -227,6 +227,7 @@ if (prop("tgpkernel-restore.prop","install")=="0") then
 	if (prop("kernel.prop","selected.3")=="1") then
 		writetmpfile("patch.prop","install=1");
 		writetmpfile("advanced.prop","install=1");
+		alert("WARNING !!", "This can change the default settings of the kernel, proceed with caution.");
 
 # ADVANCED PAGE 1 - CPU GOVERNORS (BIG)
 # -------------------------------------
@@ -265,6 +266,7 @@ if (prop("tgpkernel-restore.prop","install")=="0") then
 			"smartmax", "smartmax", "", "select",
 			"smartmax_eps", "smartmax_eps", "", "select",
 			"userspace", "userspace", "", "select",
+			"wheatley", "wheatley", "", "select",
 			"yankactive", "yankactive", "", "select",
 			"zzmoove", "zzmoove", "", "select"
 		);
@@ -311,171 +313,7 @@ if (prop("tgpkernel-restore.prop","install")=="0") then
 			"zzmoove", "zzmoove", "", "select"
 		);
 
-# ADVANCED PAGE 3 - MAX CPU RATE (BIG)
-# ------------------------------------
-		form(
-			"TGPKERNEL FOR S7 / S7 EDGE",
-			"TGPKernel Advanced Options",
-			"",
-			"cpumax-big.prop",
-			"cpumax-big", "Select your CPU Max Freq (Big CPU)", "", "group",
-			"2808", "2808 Mhz", "", "select",
-			"2704", "2704 Mhz", "", "select",
-			"2600", "2600 Mhz", "", "select",
-			"2496", "2496 Mhz", "", "select",
-			"2392", "2392 Mhz", "", "select",
-			"2288", "2288 Mhz", "", "select.selected",
-			"2184", "2184 Mhz", "", "select",
-			"2080", "2080 Mhz", "", "select",
-			"1976", "1976 Mhz", "", "select",
-			"1872", "1872 Mhz", "", "select",
-			"1768", "1768 Mhz", "", "select",
-			"1664", "1664 Mhz", "", "select",
-			"1560", "1560 Mhz", "", "select",
-			"1456", "1456 Mhz", "", "select",
-			"1352", "1352 Mhz", "", "select",
-			"1248", "1248 Mhz", "", "select",
-			"1144", "1144 Mhz", "", "select",
-			"1040", "1040 Mhz", "", "select",
-			"936", "936 Mhz", "", "select",
-			"832", "832 Mhz", "", "select",
-			"728", "728 Mhz", "", "select",
-			"624", "624 Mhz", "", "select",
-			"520", "520 Mhz", "", "select",
-			"416", "416 Mhz", "", "select",
-			"312", "312 Mhz", "", "select",
-			"208", "208 Mhz", "", "select"
-		);
-
-# ADVANCED PAGE 4 - MIN CPU RATE (BIG)
-# ------------------------------------
-		form(
-			"TGPKERNEL FOR S7 / S7 EDGE",
-			"TGPKernel Advanced Options",
-			"",
-			"cpumin-big.prop",
-			"cpumin-big", "Select your CPU Min Freq (Big CPU)", "", "group",
-			"208", "208 Mhz", "", "select.selected",
-			"312", "312 Mhz", "", "select",
-			"416", "416 Mhz", "", "select",
-			"520", "520 Mhz", "", "select",
-			"624", "624 Mhz", "", "select",
-			"728", "728 Mhz", "", "select",
-			"832", "832 Mhz", "", "select",
-			"936", "936 Mhz", "", "select",
-			"1040", "1040 Mhz", "", "select",
-			"1144", "1144 Mhz", "", "select",
-			"1248", "1248 Mhz", "", "select",
-			"1352", "1352 Mhz", "", "select",
-			"1456", "1456 Mhz", "", "select",
-			"1560", "1560 Mhz", "", "select",
-			"1664", "1664 Mhz", "", "select",
-			"1768", "1768 Mhz", "", "select",
-			"1872", "1872 Mhz", "", "select",
-			"1976", "1976 Mhz", "", "select",
-			"2080", "2080 Mhz", "", "select",
-			"2184", "2184 Mhz", "", "select",
-			"2288", "2288 Mhz", "", "select",
-			"2392", "2392 Mhz", "", "select",
-			"2496", "2496 Mhz", "", "select",
-			"2600", "2600 Mhz", "", "select",
-			"2704", "2704 Mhz", "", "select",
-			"2808", "2808 Mhz", "", "select"
-		);
-
-# ADVANCED PAGE 5 - MAX CPU RATE (LITTLE)
-# ---------------------------------------
-		form(
-			"TGPKERNEL FOR S7 / S7 EDGE",
-			"TGPKernel Advanced Options",
-			"",
-			"cpumax-little.prop",
-			"cpumax-little", "Select your CPU Max Freq (Little CPU)", "", "group",
-			"1794", "1794 Mhz", "", "select",
-			"1690", "1690 Mhz", "", "select",
-			"1586", "1586 Mhz", "", "select.selected",
-			"1482", "1482 Mhz", "", "select",
-			"1378", "1378 Mhz", "", "select",
-			"1274", "1274 Mhz", "", "select",
-			"1170", "1170 Mhz", "", "select",
-			"1066", "1066 Mhz", "", "select",
-			"962", "962 Mhz", "", "select",
-			"858", "858 Mhz", "", "select",
-			"754", "754 Mhz", "", "select",
-			"650", "650 Mhz", "", "select",
-			"546", "546 Mhz", "", "select",
-			"442", "442 Mhz", "", "select",
-			"338", "338 Mhz", "", "select",
-			"234", "234 Mhz", "", "select",
-			"130", "130 Mhz", "", "select"
-		);
-
-# ADVANCED PAGE 6 - MIN CPU RATE (LITTLE)
-# ---------------------------------------
-		form(
-			"TGPKERNEL FOR S7 / S7 EDGE",
-			"TGPKernel Advanced Options",
-			"",
-			"cpumin-little.prop",
-			"cpumin-little", "Select your CPU Min Freq (Little CPU)", "", "group",
-			"130", "130 Mhz", "", "select.selected",
-			"234", "234 Mhz", "", "select",
-			"338", "338 Mhz", "", "select",
-			"442", "442 Mhz", "", "select",
-			"546", "546 Mhz", "", "select",
-			"650", "650 Mhz", "", "select",
-			"754", "754 Mhz", "", "select",
-			"858", "858 Mhz", "", "select",
-			"962", "962 Mhz", "", "select",
-			"1066", "1066 Mhz", "", "select",
-			"1170", "1170 Mhz", "", "select",
-			"1274", "1274 Mhz", "", "select",
-			"1378", "1378 Mhz", "", "select",
-			"1482", "1482 Mhz", "", "select",
-			"1586", "1586 Mhz", "", "select",
-			"1690", "1690 Mhz", "", "select",
-			"1794", "1794 Mhz", "", "select"
-		);
-
-# ADVANCED PAGE 7 - MAX GPU RATE
-# ------------------------------
-		form(
-			"TGPKERNEL FOR S7 / S7 EDGE",
-			"TGPKernel Advanced Options",
-			"",
-			"gpumax.prop",
-			"gpumax", "Select your GPU Max Freq", "", "group",
-			"806", "806 Mhz", "", "select",
-			"702", "702 Mhz", "", "select",
-			"650", "650 Mhz", "", "select.selected",
-			"600", "600 Mhz", "", "select",
-			"546", "546 Mhz", "", "select",
-			"419", "419 Mhz", "", "select",
-			"338", "338 Mhz", "", "select",
-			"260", "260 Mhz", "", "select",
-			"112", "112 Mhz", "", "select"
-		);
-
-# ADVANCED PAGE 8 - MIN GPU RATE
-# ------------------------------
-		form(
-			"TGPKERNEL FOR S7 / S7 EDGE",
-			"TGPKernel Advanced Options",
-			"",
-			"gpumin.prop",
-			"gpumin", "Select your GPU Min Freq", "", "group",
-			"112", "112 Mhz", "", "select",
-			"260", "260 Mhz", "", "select.selected",
-			"338", "338 Mhz", "", "select",
-			"419", "419 Mhz", "", "select",
-			"546", "546 Mhz", "", "select",
-			"600", "600 Mhz", "", "select",
-			"650", "650 Mhz", "", "select",
-			"702", "702 Mhz", "", "select",
-			"806", "806 Mhz", "", "select"
-		);
-
-# ADVANCED PAGE 9 - IO SCHEDULERS (INTERNAL)
+# ADVANCED PAGE 3 - IO SCHEDULERS (INTERNAL)
 # ------------------------------------------
 		form(
 			"TGPKERNEL FOR S7 / S7 EDGE",
@@ -498,8 +336,8 @@ if (prop("tgpkernel-restore.prop","install")=="0") then
 			"zen", "zen", "", "select"
 		);
 
-# ADVANCED PAGE 10 - IO SCHEDULERS (INTERNAL)
-# -------------------------------------------
+# ADVANCED PAGE 4 - IO SCHEDULERS (INTERNAL)
+# ------------------------------------------
 		form(
 			"TGPKERNEL FOR S7 / S7 EDGE",
 			"TGPKernel Advanced Options",
@@ -521,8 +359,8 @@ if (prop("tgpkernel-restore.prop","install")=="0") then
 			"zen", "zen", "", "select"
 		);
 
-# ADVANCED PAGE 11 - CONGESTORS
-# -----------------------------
+# ADVANCED PAGE 5 - CONGESTORS
+# ----------------------------
 		form(
 			"TGPKERNEL FOR S7 / S7 EDGE",
 			"TGPKernel Advanced Options",
@@ -557,7 +395,7 @@ endif;
 setvar("retstatus",
 install(
 	"TGPKERNEL FOR S7 / S7 EDGE",
-	"Installing, Please Wait... This may take a while.",
+	"Installing, Please Wait... This may take a while...",
 	"",
 	"The installation wizard has successfully finished."
 )
