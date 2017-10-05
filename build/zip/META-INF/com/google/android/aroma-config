@@ -1,5 +1,5 @@
 # -------------------------------
-# TGPKERNEL AROMA INSTALLER v2.03
+# TGPKERNEL AROMA INSTALLER v2.04
 # aroma-config portion
 #
 # Created by djb77 from XDA
@@ -306,6 +306,7 @@ if (prop("tgpkernel-restore.prop","install")=="0") then
 			"smartmax", "smartmax", "", "select",
 			"smartmax_eps", "smartmax_eps", "", "select",
 			"userspace", "userspace", "", "select",
+			"wheatley", "wheatley", "", "select",
 			"yankactive", "yankactive", "", "select",
 			"zzmoove", "zzmoove", "", "select"
 		);
@@ -318,6 +319,7 @@ if (prop("tgpkernel-restore.prop","install")=="0") then
 			"",
 			"cpumax-big.prop",
 			"cpumax-big", "Select your CPU Max Freq (Big CPU)", "", "group",
+			"2808", "2808 Mhz", "", "select",
 			"2704", "2704 Mhz", "", "select",
 			"2600", "2600 Mhz", "", "select",
 			"2496", "2496 Mhz", "", "select",
@@ -377,7 +379,8 @@ if (prop("tgpkernel-restore.prop","install")=="0") then
 			"2392", "2392 Mhz", "", "select",
 			"2496", "2496 Mhz", "", "select",
 			"2600", "2600 Mhz", "", "select",
-			"2704", "2704 Mhz", "", "select"
+			"2704", "2704 Mhz", "", "select",
+			"2808", "2808 Mhz", "", "select"
 		);
 
 # ADVANCED PAGE 5 - MAX CPU RATE (LITTLE)
@@ -388,6 +391,8 @@ if (prop("tgpkernel-restore.prop","install")=="0") then
 			"",
 			"cpumax-little.prop",
 			"cpumax-little", "Select your CPU Max Freq (Little CPU)", "", "group",
+			"1794", "1794 Mhz", "", "select",
+			"1690", "1690 Mhz", "", "select",
 			"1586", "1586 Mhz", "", "select.selected",
 			"1482", "1482 Mhz", "", "select",
 			"1378", "1378 Mhz", "", "select",
@@ -427,7 +432,9 @@ if (prop("tgpkernel-restore.prop","install")=="0") then
 			"1274", "1274 Mhz", "", "select",
 			"1378", "1378 Mhz", "", "select",
 			"1482", "1482 Mhz", "", "select",
-			"1586", "1586 Mhz", "", "select"
+			"1586", "1586 Mhz", "", "select",
+			"1690", "1690 Mhz", "", "select",
+			"1794", "1794 Mhz", "", "select"
 		);
 
 # ADVANCED PAGE 7 - MAX GPU RATE
