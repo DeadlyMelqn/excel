@@ -66,6 +66,40 @@ $BB cat /sys/devices/system/cpu/cpufreq/mp-cpufreq/cluster0_volt_table > $MTWEAK
 $BB cat /sys/devices/14ac0000.mali/volt_table > $MTWEAKS_PATH/bk/gpu_stock_voltage
 $BB chmod -R 755 $MTWEAKS_PATH/bk/*;
 
+# Deep Sleep fix by @Chainfire (from SuperSU)
+for i in `ls /sys/class/scsi_disk/`; do
+cat /sys/class/scsi_disk/$i/write_protect 2>/dev/null | grep 1 >/dev/null
+if [ $? -eq 0 ]; then
+echo 'temporary none' > /sys/class/scsi_disk/$i/cache_type
+fi
+done
+
+# PWMFix
+# 0 = Disabled, 1 = Enabled
+echo "0" > /sys/class/lcd/panel/smart_on
+
+# SELinux Permissive / Enforcing Patch
+# 0 = Permissive, 1 = Enforcing
+$BB chmod 777 /sys/fs/selinux/enforce
+echo "0" > /sys/fs/selinux/enforce
+$BB chmod 640 /sys/fs/selinux/enforce
+
+# Stock Settings
+echo interactive > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+echo interactive > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+echo 2288000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+echo 208000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+echo 1586000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+echo 130000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+echo 650 > /sys/devices/14ac0000.mali/max_clock
+echo 260 > /sys/devices/14ac0000.mali/min_clock
+echo cfq > /sys/block/sda/queue/scheduler
+echo cfq > /sys/block/mmcblk0/queue/scheduler
+echo bic > /proc/sys/net/ipv4/tcp_congestion_control
+
+# Customisations
+
+
 # Unmount
 $BB mount -t rootfs -o remount,rw rootfs;
 $BB mount -o remount,ro /system;

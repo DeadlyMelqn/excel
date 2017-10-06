@@ -5,12 +5,10 @@
 #
 
 on boot
-     exec u:r:su:s0 root root — /sbin/kernelinit.sh
+    start kernelinit
 
 on property:sys.boot_completed=1
-    exec u:r:su:s0 root root — /sbin/sysinit.sh
-    exec u:r:su:s0 root root — /sbin/wakelock.sh
-    start sysinit
+    start initd
     start wakelock
 
 service kernelinit /sbin/kernelinit.sh
@@ -19,7 +17,7 @@ service kernelinit /sbin/kernelinit.sh
     oneshot
     disabled
     
-service sysinit /sbin/sysinit.sh
+service initd /sbin/initd.sh
     class late_start
     user root
     seclabel u:r:init:s0
