@@ -5,7 +5,7 @@
 # ---------
 # VARIABLES
 # ---------
-BUILD_SCRIPT=3.12
+BUILD_SCRIPT=3.20
 export VERSION_NUMBER=$(<build/version)
 export ANDROIDVERSION=$(<build/variant)
 ARCH=arm64
@@ -34,8 +34,8 @@ FUNC_CLEAN()
 echo ""
 echo "Deleting old work files ..."
 echo ""
-rm -rf $WORKDIR
-rm -f $OUTPUT/build.log
+[ -d "$WORKDIR" ] && rm -rf $WORKDIR
+[ -f "$OUTPUT/build.log" ] && rm -f $OUTPUT/build.log
 }
 
 FUNC_BUILD_ZIMAGE()
@@ -155,17 +155,34 @@ FUNC_BUILD_BOOTIMG()
 FUNC_BUILD_ZIP()
 {
 echo ""
-echo "Building AnyKernel Zip File ..."
+
 cd $ZIPDIR/tgpkernel/anykernel2
+
+echo "Building AnyKernel Zip File ..."
 zip -gq anykernel2.zip -r * -x "*~"
+
+cd $ZIPDIR/tgpkernel
+
+echo "Building system.tar.xz File ..."
+tar -cf - system/ | xz -9 -c - > system.tar.xz 
+
+echo "Building Kernels.tar.xz File ..."
+tar -cf - kernels/ | xz -9 -c - > kernels.tar.xz 
+
+echo "Moving .tar.xz Files ..."
+mv -f $ZIPDIR/tgpkernel/system.tar.xz $ZIPDIR/tgpkernel/files/system.tar.xz
+mv -f $ZIPDIR/tgpkernel/kernels.tar.xz $ZIPDIR/tgpkernel/files/kernels.tar.xz
+
+echo "Cleaning up ..."
+cd $ZIPDIR/tgpkernel/anykernel2
 rm -rf META-INF tgpkernel patch tools anykernel.sh
+rm -rf $ZIPDIR/tgpkernel/system
+rm -rf $ZIPDIR/tgpkernel/kernels
 
 echo "Building Zip File ..."
 cd $ZIPDIR
 zip -gq $ZIP_NAME -r META-INF/ -x "*~"
 zip -gq $ZIP_NAME -r tgpkernel/ -x "*~" 
-[ -f "$ZIPDIR/g930x.img" ] && zip -gq $ZIP_NAME g930x.img -x "*~"
-[ -f "$ZIPDIR/g935x.img" ] && zip -gq $ZIP_NAME g935x.img -x "*~"
 if [ -n `which java` ]; then
 	echo "Java Detected, Signing Zip File ..."
 	mv $ZIP_NAME old$ZIP_NAME
@@ -254,13 +271,15 @@ OPTION_4()
 [ -d "$ZIPDIR" ] && rm -rf $ZIPDIR
 [ ! -d "$ZIPDIR" ] && mkdir $ZIPDIR
 cp -rf $RDIR/build/zip/* $ZIPDIR
+mkdir -p $ZIPDIR/tgpkernel/files
+mkdir -p $ZIPDIR/tgpkernel/kernels
 MODEL=herolte
 KERNEL_DEFCONFIG=$KERNELCONFIG-herolte_defconfig
 START_TIME=`date +%s`
 	(
 	FUNC_BUILD_BOOTIMG
 	) 2>&1	 | tee -a $OUTPUT/build.log
-mv -f $WORKDIR/ramdisk/image-new.img $ZIPDIR/g930x.img
+mv -f $WORKDIR/ramdisk/image-new.img $ZIPDIR/tgpkernel/kernels/g930x.img
 mv -f $OUTPUT/build.log $OUTPUT/build-g930x.log
 ZIP_DATE=`date +%Y%m%d`
 ZIP_NAME=$KERNELNAME.G930x.$ANDROIDVERSION.v$VERSION_NUMBER.$ZIP_DATE.zip
@@ -283,13 +302,15 @@ OPTION_5()
 [ -d "$ZIPDIR" ] && rm -rf $ZIPDIR
 [ ! -d "$ZIPDIR" ] && mkdir $ZIPDIR
 cp -rf $RDIR/build/zip/* $ZIPDIR
+mkdir -p $ZIPDIR/tgpkernel/files
+mkdir -p $ZIPDIR/tgpkernel/kernels
 MODEL=hero2lte
 KERNEL_DEFCONFIG=$KERNELCONFIG-hero2lte_defconfig
 START_TIME=`date +%s`
 	(
 	FUNC_BUILD_BOOTIMG
 	) 2>&1	 | tee -a $OUTPUT/build.log
-mv -f $WORKDIR/ramdisk/image-new.img $ZIPDIR/g935x.img
+mv -f $WORKDIR/ramdisk/image-new.img $ZIPDIR/tgpkernel/kernels/g935x.img
 mv -f $OUTPUT/build.log $OUTPUT/build-g935x.log
 ZIP_DATE=`date +%Y%m%d`
 ZIP_NAME=$KERNELNAME.G935x.$ANDROIDVERSION.v$VERSION_NUMBER.$ZIP_DATE.zip
@@ -312,13 +333,15 @@ OPTION_6()
 [ -d "$ZIPDIR" ] && rm -rf $ZIPDIR
 [ ! -d "$ZIPDIR" ] && mkdir $ZIPDIR
 cp -rf $RDIR/build/zip/* $ZIPDIR
+mkdir -p $ZIPDIR/tgpkernel/files
+mkdir -p $ZIPDIR/tgpkernel/kernels
 MODEL=herolte
 KERNEL_DEFCONFIG=$KERNELCONFIG-herolte_defconfig
 START_TIME=`date +%s`
 	(
 	FUNC_BUILD_BOOTIMG
 	) 2>&1	 | tee -a $OUTPUT/build.log
-mv -f $WORKDIR/ramdisk/image-new.img $ZIPDIR/g930x.img
+mv -f $WORKDIR/ramdisk/image-new.img $ZIPDIR/tgpkernel/kernels/g930x.img
 mv -f $OUTPUT/build.log $OUTPUT/build-g930x.log
 ZIP_DATE=`date +%Y%m%d`
 ZIP_NAME=$KERNELNAME.G930x.$ANDROIDVERSION.v$VERSION_NUMBER.$ZIP_DATE.zip
@@ -332,7 +355,7 @@ KERNEL_DEFCONFIG=$KERNELCONFIG-hero2lte_defconfig
 	(
 	FUNC_BUILD_BOOTIMG
 	) 2>&1	 | tee -a $OUTPUT/build.log
-mv -f $WORKDIR/ramdisk/image-new.img $ZIPDIR/g935x.img
+mv -f $WORKDIR/ramdisk/image-new.img $ZIPDIR/tgpkernel/kernels/g935x.img
 mv -f $OUTPUT/build.log $OUTPUT/build-g935x.log
 ZIP_NAME=$KERNELNAME.G935x.$ANDROIDVERSION.v$VERSION_NUMBER.$ZIP_DATE.zip
 ZIP_FILE_TARGET=$ZIPDIR/$ZIP_NAME
@@ -355,20 +378,22 @@ OPTION_7()
 [ -d "$ZIPDIR" ] && rm -rf $ZIPDIR
 [ ! -d "$ZIPDIR" ] && mkdir $ZIPDIR
 cp -rf $RDIR/build/zip/* $ZIPDIR
+mkdir -p $ZIPDIR/tgpkernel/files
+mkdir -p $ZIPDIR/tgpkernel/kernels
 MODEL=herolte
 KERNEL_DEFCONFIG=$KERNELCONFIG-herolte_defconfig
 START_TIME=`date +%s`
 	(
 	FUNC_BUILD_BOOTIMG
 	) 2>&1	 | tee -a $OUTPUT/build.log
-mv -f $WORKDIR/ramdisk/image-new.img $ZIPDIR/g930x.img
+mv -f $WORKDIR/ramdisk/image-new.img $ZIPDIR/tgpkernel/kernels/g930x.img
 mv -f $OUTPUT/build.log $OUTPUT/build-g930x.log
 MODEL=hero2lte
 KERNEL_DEFCONFIG=$KERNELCONFIG-hero2lte_defconfig
 	(
 	FUNC_BUILD_BOOTIMG
 	) 2>&1	 | tee -a $OUTPUT/build.log
-mv -f $WORKDIR/ramdisk/image-new.img $ZIPDIR/g935x.img
+mv -f $WORKDIR/ramdisk/image-new.img $ZIPDIR/tgpkernel/kernels/g935x.img
 mv -f $OUTPUT/build.log $OUTPUT/build-g935x.log
 ZIP_DATE=`date +%Y%m%d`
 ZIP_NAME=$KERNELNAME.G93xx.$ANDROIDVERSION.v$VERSION_NUMBER.$ZIP_DATE.zip
