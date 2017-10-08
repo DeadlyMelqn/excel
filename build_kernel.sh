@@ -142,7 +142,7 @@ if ! [ $(whoami) == yuv ] || ! [ $(hostname) == yuv-pc ]; then
 fi
 export LOCALVERSION=-${KERNEL_NAME}-v${KERNEL_VERSION}
 
-KERNEL_DEFCONFIG=prophecy-${MODEL}_defconfig
+KERNEL_DEFCONFIG=excel-${MODEL}_defconfig
 
 PAGE_SIZE=2048
 DTB_PADDING=0
