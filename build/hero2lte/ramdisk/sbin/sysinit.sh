@@ -28,5 +28,16 @@ for file in /system/etc/init.d/*; do
 	sh $file >/dev/null
 done
 
+# Stock Settings borrowed from my dude djb77
+echo interactive > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+echo interactive > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+echo 2288000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+echo 208000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+echo 1586000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+echo 130000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+echo 650 > /sys/devices/14ac0000.mali/max_clock
+echo 260 > /sys/devices/14ac0000.mali/min_clock
+echo westwood > /proc/sys/net/ipv4/tcp_congestion_control
+
 mount -o ro,remount /
 mount -o ro,remount /system
