@@ -1,5 +1,5 @@
 # -------------------------------
-# TGPKERNEL AROMA INSTALLER v2.07
+# TGPKERNEL AROMA INSTALLER v2.10
 # updater-script portion
 #
 # Created by djb77 from XDA
@@ -10,6 +10,12 @@
 
 ui_print("@Setting up");
 set_progress(0.0);
+
+# UNPACK FILES
+# ------------
+ui_print("- Unpacking Files");
+package_extract_dir("tgpkernel/files", "/tmp/tgptemp");
+run_program("/tmp/aroma/unpack.sh");
 
 # MOUNT PARTITIONS
 # ----------------
@@ -47,7 +53,7 @@ then
 	run_program("/tmp/aroma/wipe.sh");
 endif;
 
-set_progress(0.10);
+set_progress(0.25);
 
 # FLASH KERNEL
 # ------------
@@ -55,13 +61,13 @@ if file_getprop("/tmp/aroma/g930x.prop","install") == "1"
 then
 	ui_print(" ");
 	ui_print("@Flashing TGPKernel for S7");
-	package_extract_file("g930x.img", "/dev/block/platform/155a0000.ufs/by-name/BOOT");
+	run_program("/tmp/aroma/flash.sh");
 endif;
 if file_getprop("/tmp/aroma/g935x.prop","install") == "1"
 then
 	ui_print(" ");
 	ui_print("@Flashing TGPKernel for S7 Edge");
-	package_extract_file("g935x.img", "/dev/block/platform/155a0000.ufs/by-name/BOOT");
+	run_program("/tmp/aroma/flash.sh");
 endif;
 
 set_progress(0.35);
@@ -69,12 +75,7 @@ set_progress(0.35);
 # INSTALL SYSTEM PATCHES
 # ----------------------
 ui_print("@Patching System");
-delete("/system/app/mcRegistry/ffffffffd0000000000000000000000a.tlbin");
-delete("/system/vendor/lib/libsecure_storage.so");
-delete("/system/vendor/lib64/libsecure_storage.so");
-package_extract_dir("tgpkernel/system", "/system");
-delete("/system/etc/init.d/placeholder");
-ui_print(" ");
+run_program("/tmp/aroma/system.sh");
 
 set_progress(0.40);
 
