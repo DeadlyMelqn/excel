@@ -16,8 +16,8 @@
 #
 
 KERNEL_NAME="Excel_Kernel"
-KERNEL_VERSION="1.0.0"
-KERNEL_REVISION="1"
+KERNEL_VERSION="1.0.2"
+KERNEL_REVISION="0"
 KERNEL_BETA="1"
 
 export ARCH=arm64
@@ -137,7 +137,7 @@ fi
 if [ $KERNEL_REVISION != 0 ]; then
 	KERNEL_VERSION+=-r$KERNEL_REVISION
 fi
-if ! [ $(whoami) == kylothow ] || ! [ $(hostname) == xda-developers ]; then
+if ! [ $(whoami) == yuv ] || ! [ $(hostname) == yuv-pc ]; then
 	KERNEL_VERSION+=-UNOFFICIAL
 fi
 export LOCALVERSION=-${KERNEL_NAME}-v${KERNEL_VERSION}
