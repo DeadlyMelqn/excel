@@ -246,8 +246,6 @@ void drop_inmem_pages(struct inode *inode)
 	mutex_lock(&fi->inmem_lock);
 	__revoke_inmem_pages(inode, &fi->inmem_pages, true, false);
 	mutex_unlock(&fi->inmem_lock);
-
-	trace_f2fs_register_inmem_page(page, INMEM);
 }
 
 static int __commit_inmem_pages(struct inode *inode,
@@ -495,7 +493,6 @@ int create_flush_cmd_control(struct f2fs_sb_info *sbi)
 	if (IS_ERR(fcc->f2fs_issue_flush)) {
 		err = PTR_ERR(fcc->f2fs_issue_flush);
 		kfree(fcc);
-		fcc = NULL;
 		SM_I(sbi)->cmd_control_info = NULL;
 		return err;
 	}
@@ -510,7 +507,6 @@ void destroy_flush_cmd_control(struct f2fs_sb_info *sbi)
 	if (fcc && fcc->f2fs_issue_flush)
 		kthread_stop(fcc->f2fs_issue_flush);
 	kfree(fcc);
-	fcc = NULL;
 	SM_I(sbi)->cmd_control_info = NULL;
 }
 
