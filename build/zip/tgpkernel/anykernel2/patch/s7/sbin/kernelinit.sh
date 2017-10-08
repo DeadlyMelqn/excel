@@ -85,17 +85,17 @@ echo "0" > /sys/fs/selinux/enforce
 $BB chmod 640 /sys/fs/selinux/enforce
 
 # Stock Settings
-# echo interactive > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
-# echo interactive > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-# echo 2288000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
-# echo 208000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
-# echo 1586000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
-# echo 130000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-# echo 650 > /sys/devices/14ac0000.mali/max_clock
-# echo 260 > /sys/devices/14ac0000.mali/min_clock
-# echo cfq > /sys/block/sda/queue/scheduler
-# echo cfq > /sys/block/mmcblk0/queue/scheduler
-# echo bic > /proc/sys/net/ipv4/tcp_congestion_control
+echo interactive > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor
+echo interactive > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+echo 2288000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq
+echo 208000 > /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq
+echo 1586000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+echo 130000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+echo 650 > /sys/devices/14ac0000.mali/max_clock
+echo 260 > /sys/devices/14ac0000.mali/min_clock
+echo cfq > /sys/block/sda/queue/scheduler
+echo cfq > /sys/block/mmcblk0/queue/scheduler
+echo bic > /proc/sys/net/ipv4/tcp_congestion_control
 
 # Tweaks: SD-Card Readhead (@Morogoku)
 $BB echo "2048" > /sys/devices/virtual/bdi/179:0/read_ahead_kb;
