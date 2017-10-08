@@ -4,7 +4,7 @@
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
-#    http://www.apache.org/licenses/LICENSE-2.0
+#http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
 # distributed under the License is distributed on an "AS IS" BASIS,
@@ -97,6 +97,25 @@ echo cfq > /sys/block/sda/queue/scheduler
 echo cfq > /sys/block/mmcblk0/queue/scheduler
 echo bic > /proc/sys/net/ipv4/tcp_congestion_control
 
+# Tweaks: SD-Card Readhead (@Morogoku)
+$BB echo "2048" > /sys/devices/virtual/bdi/179:0/read_ahead_kb;
+
+# Tweaks: Internet Speed (@Morogoku)
+$BB echo "0" > /proc/sys/net/ipv4/tcp_timestamps;
+$BB echo "1" > /proc/sys/net/ipv4/tcp_tw_reuse;
+$BB echo "1" > /proc/sys/net/ipv4/tcp_sack;
+$BB echo "1" > /proc/sys/net/ipv4/tcp_tw_recycle;
+$BB echo "1" > /proc/sys/net/ipv4/tcp_window_scaling;
+$BB echo "5" > /proc/sys/net/ipv4/tcp_keepalive_probes;
+$BB echo "30" > /proc/sys/net/ipv4/tcp_keepalive_intvl;
+$BB echo "30" > /proc/sys/net/ipv4/tcp_fin_timeout;
+$BB echo "404480" > /proc/sys/net/core/wmem_max;
+$BB echo "404480" > /proc/sys/net/core/rmem_max;
+$BB echo "256960" > /proc/sys/net/core/rmem_default;
+$BB echo "256960" > /proc/sys/net/core/wmem_default;
+$BB echo "4096,16384,404480" > /proc/sys/net/ipv4/tcp_wmem;
+$BB echo "4096,87380,404480" > /proc/sys/net/ipv4/tcp_rmem;
+	
 # Customisations
 
 
