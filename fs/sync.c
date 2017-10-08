@@ -70,7 +70,7 @@ static struct workqueue_struct *intr_sync_wq;
 /* It prevents double allocation of intr_sync_wq */
 static DEFINE_MUTEX(intr_sync_wq_lock);
 
-static inline struct interruptible_sync_work *INTR_SYNC_WORK(struct work_struct *work) 
+static inline struct interruptible_sync_work *INTR_SYNC_WORK(struct work_struct *work)
 {
 	return container_of(work, struct interruptible_sync_work, work);
 }
@@ -358,7 +358,7 @@ SYSCALL_DEFINE0(sync)
 	int nowait = 0, wait = 1;
 
 #ifndef CONFIG_SAMSUNG_PRODUCT_SHIP
-	printk("sync logger: sync called by %s[%u] (tgid:%u)\n", 
+	printk("sync logger: sync called by %s[%u] (tgid:%u)\n",
 		current->comm, current->pid,  pid_vnr(task_tgid(current)));
 #endif
 	wakeup_flusher_threads(0, WB_REASON_SYNC);
@@ -370,7 +370,7 @@ SYSCALL_DEFINE0(sync)
 	if (unlikely(laptop_mode))
 		laptop_sync_completion();
 #ifndef CONFIG_SAMSUNG_PRODUCT_SHIP
-	printk("sync logger: sync done by %s[%u]\n", 
+	printk("sync logger: sync done by %s[%u]\n",
 		current->comm, current->pid);
 #endif
 	return 0;
@@ -454,8 +454,17 @@ int vfs_fsync_range(struct file *file, loff_t start, loff_t end, int datasync)
 {
 	if (!fsync_enabled)
 		return 0;
+
+	struct inode *inode = file->f_mapping->host;
+
 	if (!file->f_op->fsync)
 		return -EINVAL;
+	if (!datasync && (inode->i_state & I_DIRTY_TIME)) {
+		spin_lock(&inode->i_lock);
+		inode->i_state &= ~I_DIRTY_TIME;
+		spin_unlock(&inode->i_lock);
+		mark_inode_dirty_sync(inode);
+	}
 	return file->f_op->fsync(file, start, end, datasync);
 }
 EXPORT_SYMBOL(vfs_fsync_range);
