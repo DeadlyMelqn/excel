@@ -29,6 +29,7 @@ is_slot_device=0;
 ## AnyKernel permissions
 # set permissions for included ramdisk files
 chmod 750 $ramdisk/init.services.rc
+chmod 750 $ramdisk/init.kernelconf.rc
 chmod 750 $ramdisk/sbin/sepolicy.sh
 chmod 750 $ramdisk/sbin/sysinit.sh
 chmod 750 $ramdisk/fstab.samsungexynos8890
