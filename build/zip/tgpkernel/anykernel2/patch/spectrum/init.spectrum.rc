@@ -2,7 +2,7 @@
 # Ramdisk file for profile based kernel management
 # Implimentation inspired by Franco's fku profiles
 # Settings by @farovitus
-# Other modifications by @Morogoku
+# Modifications by @Morogoku
 
 # Initialization
 on property:sys.boot_completed=1
@@ -11,7 +11,7 @@ on property:sys.boot_completed=1
    exec u:r:su:s0 root root -- /init.spectrum.sh
    # Enable Spectrum support
    setprop spectrum.support 1
-   setprop persist.spectrum.kernel MoRo
+   setprop persist.spectrum.kernel TGPKernel
 
 # Balance (default profile, Samsung Stock)
 on property:persist.spectrum.profile=0

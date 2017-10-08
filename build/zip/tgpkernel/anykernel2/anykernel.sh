@@ -26,12 +26,10 @@ device.name4=
 device.name5=
 } # end properties
 
-# Extra 0's needed for CPU Freqs
-ZEROS=000
-
 # Shell Variables
 block=/dev/block/platform/155a0000.ufs/by-name/BOOT;
 is_slot_device=0;
+bb="$BB"
 
 ## AnyKernel methods (DO NOT CHANGE)
 # import patching functions/variables - see for reference
@@ -81,17 +79,33 @@ if egrep -q "install=1" "/tmp/aroma/spectrum.prop"; then
 	replace_file init.spectrum.sh 644 spectrum/init.spectrum.sh;
 	insert_line init.rc "import /init.spectrum.rc" after "import /init.services.rc" "import /init.spectrum.rc";
 fi;
+if egrep -q "selected.1=1" "/tmp/aroma/spectrumprofile.prop"; then
+	ui_print "- Setting Balanced Spectrum Profile";
+	insert_line sbin/kernelinit.sh "\$BB sbin/resetprop persist.spectrum.profile 0" after "# Spectrum Profile" "\$BB sbin/resetprop persist.spectrum.profile 0";
+fi;
+if egrep -q "selected.1=2" "/tmp/aroma/spectrumprofile.prop"; then
+	ui_print "- Setting Performance Spectrum Profile";
+	insert_line sbin/kernelinit.sh "\$BB sbin/resetprop persist.spectrum.profile 1" after "# Spectrum Profile" "\$BB sbin/resetprop persist.spectrum.profile 1";
+fi;
+if egrep -q "selected.1=3" "/tmp/aroma/spectrumprofile.prop"; then
+	ui_print "- Setting Battery Spectrum Profile";
+	insert_line sbin/kernelinit.sh "\$BB sbin/resetprop persist.spectrum.profile 2" after "# Spectrum Profile" "\$BB sbin/resetprop persist.spectrum.profile 2";
+fi;
+if egrep -q "selected.1=4" "/tmp/aroma/spectrumprofile.prop"; then
+	ui_print "- Setting Gaming Spectrum Profile";
+	insert_line sbin/kernelinit.sh "\$BB sbin/resetprop persist.spectrum.profile 3" after "# Spectrum Profile" "\$BB sbin/resetprop persist.spectrum.profile 3";
+fi;
 
 # Ramdisk changes - PWMFix
 if egrep -q "install=1" "/tmp/aroma/pwm.prop"; then
 	ui_print "- Enabling PWMFix by default";
-	replace_string sbin/kernelinit.sh "echo \"1\" > /sys/class/lcd/panel/smart_on" "echo \"0\" > /sys/class/lcd/panel/smart_on" "echo \"1\" > /sys/class/lcd/panel/smart_on";
+	replace_string sbin/kernelinit.sh "\$BB echo \"1\" > /sys/class/lcd/panel/smart_on" "\$BB echo \"0\" > /sys/class/lcd/panel/smart_on" "\$BB echo \"1\" > /sys/class/lcd/panel/smart_on";
 fi;
 
 # Ramdisk changes - SELinux (Fake) Enforcing Mode
 if egrep -q "install=1" "/tmp/aroma/selinux.prop"; then
 	ui_print "- Enabling SELinux Enforcing Mode";
-	replace_string sbin/kernelinit.sh "echo \"1\" > /sys/fs/selinux/enforce" "echo \"0\" > /sys/fs/selinux/enforce" "echo \"1\" > /sys/fs/selinux/enforce";
+	replace_string sbin/kernelinit.sh "\$BB echo \"1\" > /sys/fs/selinux/enforce" "\$BB echo \"0\" > /sys/fs/selinux/enforce" "\$BB echo \"1\" > /sys/fs/selinux/enforce";
 fi;
 
 # Ramdisk Advanced Options
@@ -102,7 +116,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	GOVERNOR_BIG=`cat /tmp/aroma/governor-big.prop`
 	if [[ "$GOVERNOR_BIG" != "interactive" ]]; then
 		ui_print "- Setting CPU Big Freq Governor to $GOVERNOR_BIG";
-		insert_line sbin/kernelinit.sh "echo $GOVERNOR_BIG > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor" after "# Customisations" "echo $GOVERNOR_BIG > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor";
+		insert_line sbin/kernelinit.sh "\$BB echo $GOVERNOR_BIG > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor" after "# Customisations" "\$BB echo $GOVERNOR_BIG > /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor";
 	fi
 
 # Ramdisk changes for CPU Governors (Little)
@@ -110,7 +124,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	GOVERNOR_LITTLE=`cat /tmp/aroma/governor-little.prop`
 	if [[ "$GOVERNOR_LITTLE" != "interactive" ]]; then
 		ui_print "- Setting CPU Little Freq Governor to $GOVERNOR_LITTLE";
-		insert_line sbin/kernelinit.sh "echo $GOVERNOR_LITTLE > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor" after "# Customisations" "echo $GOVERNOR_LITTLE > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
+		insert_line sbin/kernelinit.sh "\$BB echo $GOVERNOR_LITTLE > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor" after "# Customisations" "\$BB echo $GOVERNOR_LITTLE > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor";
 	fi
 
 # Ramdisk changes for IO Schedulers (Internal)
@@ -118,7 +132,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	SCHEDULER_INTERNAL=`cat /tmp/aroma/scheduler-internal.prop`
 	if [[ "$SCHEDULER_INTERNAL" != "cfq" ]]; then
 		ui_print "- Setting Internal IO Scheduler to $SCHEDULER_INTERNAL";
-		insert_line sbin/kernelinit.sh "echo $SCHEDULER_INTERNAL > /sys/block/sda/queue/scheduler" after "# Customisations" "echo $SCHEDULER_INTERNAL > /sys/block/sda/queue/scheduler";
+		insert_line sbin/kernelinit.sh "\$BB echo $SCHEDULER_INTERNAL > /sys/block/sda/queue/scheduler" after "# Customisations" "\$BB echo $SCHEDULER_INTERNAL > /sys/block/sda/queue/scheduler";
 	fi
 
 # Ramdisk changes for IO Schedulers (External)
@@ -126,7 +140,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	SCHEDULER_EXTERNAL=`cat /tmp/aroma/scheduler-external.prop`
 	if [[ "$SCHEDULER_EXTERNAL" != "cfq" ]]; then
 		ui_print "- Setting External IO Scheduler to $SCHEDULER_EXTERNAL";
-		insert_line sbin/kernelinit.sh "echo $SCHEDULER_EXTERNAL > /sys/block/mmcblk0/queue/scheduler" after "# Customisations" "echo $SCHEDULER_EXTERNAL > /sys/block/mmcblk0/queue/scheduler";
+		insert_line sbin/kernelinit.sh "\$BB echo $SCHEDULER_EXTERNAL > /sys/block/mmcblk0/queue/scheduler" after "# Customisations" "\$BB echo $SCHEDULER_EXTERNAL > /sys/block/mmcblk0/queue/scheduler";
 	fi
 
 # Ramdisk changes for TCP Congestion Algorithms
@@ -134,7 +148,7 @@ if egrep -q "install=1" "/tmp/aroma/advanced.prop"; then
 	TCP=`cat /tmp/aroma/tcp.prop`
 	if [[ "$TCP" != "bic" ]]; then
 		ui_print "- Setting TCP Congestion Algorithm to $TCP";
-		insert_line sbin/kernelinit.sh "echo $TCP > /proc/sys/net/ipv4/tcp_congestion_control" after "# Customisations" "echo $TCP > /proc/sys/net/ipv4/tcp_congestion_control";
+		insert_line sbin/kernelinit.sh "\$BB echo $TCP > /proc/sys/net/ipv4/tcp_congestion_control" after "# Customisations" "\$BB echo $TCP > /proc/sys/net/ipv4/tcp_congestion_control";
 	fi
 
 fi
