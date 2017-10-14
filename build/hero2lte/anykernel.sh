@@ -35,6 +35,8 @@ dump_boot;
 
 # begin ramdisk changes
 
+insert_line default.prop "ro.sys.sdcardfs=false" after "debug.atrace.tags.enableflags=0" "ro.sys.sdcardfs=false";
+
 # end ramdisk changes
 
 write_boot;
