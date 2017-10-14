@@ -15,14 +15,14 @@
 # GNU General Public License for more details.
 #
 
-KERNEL_NAME="Prophecy_Kernel"
-KERNEL_VERSION="1.0.1"
-KERNEL_REVISION="1"
-KERNEL_BETA="0"
+KERNEL_NAME="Excel_Kernel"
+KERNEL_VERSION="1.0.0"
+KERNEL_REVISION="0"
+KERNEL_BETA="1"
 
 export ARCH=arm64
 export BUILD_JOB_NUMBER=$(grep processor /proc/cpuinfo | wc -l)
-export BUILD_CROSS_COMPILE=../aarch64-linaro-linux-android-7.2.1-20170916/bin/aarch64-linaro-linux-android-
+export BUILD_CROSS_COMPILE=~/toolchains/aarch64-cortex_a53-linux-gnueabi/bin/aarch64-cortex_a53-linux-gnueabi-
 
 FUNC_CLEAN_ENVIRONMENT()
 {
@@ -137,12 +137,12 @@ fi
 if [ $KERNEL_REVISION != 0 ]; then
 	KERNEL_VERSION+=-r$KERNEL_REVISION
 fi
-if ! [ $(whoami) == kylothow ] || ! [ $(hostname) == xda-developers ]; then
+if ! [ $(whoami) == yuv ] || ! [ $(hostname) == yuv-pc ]; then
 	KERNEL_VERSION+=-UNOFFICIAL
 fi
 export LOCALVERSION=-${KERNEL_NAME}-v${KERNEL_VERSION}
 
-KERNEL_DEFCONFIG=prophecy-${MODEL}_defconfig
+KERNEL_DEFCONFIG=excel-${MODEL}_defconfig
 
 PAGE_SIZE=2048
 DTB_PADDING=0
@@ -298,7 +298,7 @@ FUNC_BUILD_ZIP()
 	cd $ZIPDIR
 	echo "=> Output: $EXTDIR/${KERNEL_NAME}-v${KERNEL_VERSION}${BUILD_TYPE}-${MODEL}.zip"
 	echo ""
-	zip -r9 $EXTDIR/${KERNEL_NAME}-v${KERNEL_VERSION}${BUILD_TYPE}-${MODEL}.zip * .version -x modules/\* -x patch/\*
+	zip -r9 $EXTDIR/${KERNEL_NAME}-v${KERNEL_VERSION}${BUILD_TYPE}-${MODEL}.zip * .version -x modules/\* -x patch/\* ramdisk/\*
 
 	echo ""
 	echo "=================================================================="
