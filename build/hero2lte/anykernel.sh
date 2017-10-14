@@ -28,6 +28,7 @@ is_slot_device=0;
 
 ## AnyKernel permissions
 # set permissions for included ramdisk files
+chmod -R 755 $ramdisk
 chmod 644 $ramdisk/fstab.samsungexynos8890
 
 ## AnyKernel install
