@@ -2,6 +2,19 @@
 # AnyKernel2 Backend
 # osm0sis @ xda-developers
 
+ui_print " ********                          **";
+ui_print "/**/////                          /**";
+ui_print "/**       **   **  *****   *****  /**";
+ui_print "/******* //** **  **///** **///** /**";
+ui_print "/**////   //***  /**  // /******* /**";
+ui_print "/**        **/** /**   **/**////  /**";
+ui_print "/******** ** //**//***** //****** ***";
+ui_print "//////// //   //  /////   ////// /// ";
+ui_print "========================================";
+ui_print "Excel Kernel by Yuv";
+ui_print "Intended to be Installed on AOSP ROMS"
+ui_print "Based on DQIC";
+
 OUTFD=/proc/self/fd/$2;
 ZIPFILE="$3";
 DIR=`dirname "$ZIPFILE"`;
@@ -77,7 +90,7 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.devicecheck)" == 1 ]; then
   done;
   ui_print " ";
   if [ "$match" != 1 ]; then
-    abort "Unsupported device. Aborting...";
+    abort "Unsupported device. Did you mean to install for herolte?";
   fi;
 fi;
 
@@ -111,5 +124,6 @@ fi;
 
 umount /system;
 umount /data 2>/dev/null;
-ui_print " ";
-ui_print "Done!";
+ui_print "========================================";
+ui_print "Thanks to everyone that helped me out!";
+ui_print "Done! Enjoy";
