@@ -298,7 +298,8 @@ FUNC_BUILD_ZIP()
 	cd $ZIPDIR
 	echo "=> Output: $EXTDIR/${KERNEL_NAME}-v${KERNEL_VERSION}${BUILD_TYPE}-${MODEL}.zip"
 	echo ""
-	zip -r9 $EXTDIR/${KERNEL_NAME}-v${KERNEL_VERSION}${BUILD_TYPE}-${MODEL}.zip * .version -x modules/\* -x patch/\*
+	zip -r9 $EXTDIR/${KERNEL_NAME}-v${KERNEL_VERSION}${BUILD_TYPE}-${MODEL}.zip * .version -x modules/\*
+	echo "Making ZIP with patch and ramdisk folder"
 
 	echo ""
 	echo "=================================================================="
