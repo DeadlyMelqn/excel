@@ -2,6 +2,7 @@
 # AnyKernel2 Backend
 # osm0sis @ xda-developers
 
+ui_print " ";
 ui_print " ********                          **";
 ui_print "/**/////                          /**";
 ui_print "/**       **   **  *****   *****  /**";
@@ -11,9 +12,9 @@ ui_print "/**        **/** /**   **/**////  /**";
 ui_print "/******** ** //**//***** //****** ***";
 ui_print "//////// //   //  /////   ////// /// ";
 ui_print "========================================";
-ui_print "Excel Kernel by Yuv";
-ui_print "Intended to be Installed on AOSP ROMS"
+ui_print "Intended to be Installed on AOSP ROMS";
 ui_print "Based on DQIC";
+ui_print " ";
 
 OUTFD=/proc/self/fd/$2;
 ZIPFILE="$3";
@@ -72,7 +73,7 @@ $bb chmod -R 755 /tmp/anykernel/tools /tmp/anykernel/bin;
 
 ui_print "$(file_getprop /tmp/anykernel/anykernel.sh kernel.string)";
 ui_print " ";
-ui_print "AnyKernel2 by osm0sis @ xda-developers";
+ui_print "Based on AnyKernel2 by osm0sis @ xda-developers";
 ui_print " ";
 umount /system 2>/dev/null;
 mount -o ro -t auto /system;
@@ -80,11 +81,12 @@ mount /data 2>/dev/null;
 test -f /system/system/build.prop && root=/system;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.devicecheck)" == 1 ]; then
-  ui_print "Checking device...";
+  ui_print "Checking Device Model...";
+  ui_print "...";
   for i in 1 2 3 4 5; do
     testname="$(file_getprop /tmp/anykernel/anykernel.sh device.name$i)";
     if [ "$(getprop ro.product.device)" == "$testname" -o "$(getprop ro.build.product)" == "$testname" ]; then
-      ui_print "$testname";
+      ui_print "Found your model, $testname";
       match=1;
     fi;
   done;
@@ -124,6 +126,7 @@ fi;
 
 umount /system;
 umount /data 2>/dev/null;
+ui_print " ";
 ui_print "========================================";
 ui_print "Thanks to everyone that helped me out!";
 ui_print "Done! Enjoy";
