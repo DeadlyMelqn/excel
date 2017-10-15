@@ -17,8 +17,6 @@
 
 #include <linux/battery/sec_battery.h>
 
-extern bool unstable_power_detection;
-
 static struct sec_battery_info *info;
 	
 enum charge_control_type {
@@ -64,7 +62,7 @@ enum other_types {
 
 struct charge_control charge_controls[] = {
 	charge("ac"	, POWER_SUPPLY_TYPE_MAINS),
-	charge("hv"	, POWER_SUPPLY_TYPE_HV_MAINS),
+	charge("hv"	, POWER_SUPPLY_TYPE_HV_MAINS_CHG_LIMIT),
 	charge("hv_prep", POWER_SUPPLY_TYPE_HV_PREPARE_MAINS),
 	charge("sdp"	, POWER_SUPPLY_TYPE_USB),
 	charge("dcp"	, POWER_SUPPLY_TYPE_USB_DCP),
@@ -72,6 +70,7 @@ struct charge_control charge_controls[] = {
 	charge("aca"	, POWER_SUPPLY_TYPE_USB_ACA),
 	charge("wc"	, POWER_SUPPLY_TYPE_WIRELESS),
 	charge("car"	, POWER_SUPPLY_TYPE_CARDOCK),
+	charge("otg"	, POWER_SUPPLY_TYPE_OTG),
 	
 	charge("mhl_500", POWER_SUPPLY_TYPE_MHL_500),
 	charge("mhl_900", POWER_SUPPLY_TYPE_MHL_900),
@@ -148,13 +147,6 @@ static ssize_t store_charge_property(struct device *dev,
 	return count;
 }
 
-#define CHARGE_INT_ATTR(_name, _mode, _var) \
-	{ __ATTR(_name, _mode, device_show_int, device_store_int), &(_var) }
-
-struct dev_ext_attribute static_controls[] = {
-	CHARGE_INT_ATTR(unstable_power_detection, 0644, unstable_power_detection)
-};
-
 void charger_control_init(struct sec_battery_info *sec_info)
 {
 	int i;
@@ -163,9 +155,5 @@ void charger_control_init(struct sec_battery_info *sec_info)
 
 	for (i = 0; i < ARRAY_SIZE(charge_controls); i++)
 		if (device_create_file(info->dev, &charge_controls[i].attribute))
-			;;
-
-	for (i = 0; i < ARRAY_SIZE(static_controls); i++)
-		if (device_create_file(info->dev, &static_controls[i].attr))
 			;;
 }
