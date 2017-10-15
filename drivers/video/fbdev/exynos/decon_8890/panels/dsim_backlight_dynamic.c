@@ -146,9 +146,6 @@ static unsigned char *get_gamma_from_index(struct dsim_device *dsim, int index)
 {
 	struct panel_private *panel = &dsim->priv;
 	struct SmtDimInfo *dimming_info = (struct SmtDimInfo *)panel->dim_info;
-#ifdef CONFIG_PANEL_SMART_DIMMING
-	struct SmtDimInfo *smart_dimming_info = (struct SmtDimInfo *)panel->smart_dim_info;
-#endif
 
 	if (dimming_info == NULL) {
 		dsim_err("%s : dimming info is NULL\n", __func__);
@@ -158,11 +155,6 @@ static unsigned char *get_gamma_from_index(struct dsim_device *dsim, int index)
 	if (index > MAX_BR_INFO)
 		index = MAX_BR_INFO;
 
-#ifdef CONFIG_PANEL_SMART_DIMMING
-	if (panel->smart_on)
-		return (unsigned char *)smart_dimming_info[index].gamma;
-	else
-#endif
 	return (unsigned char *)dimming_info[index].gamma;
 
 get_gamma_err:
@@ -174,9 +166,6 @@ static unsigned char *get_elvss_from_index(struct dsim_device *dsim, int index, 
 {
 	struct panel_private *panel = &dsim->priv;
 	struct SmtDimInfo *dimming_info = (struct SmtDimInfo *)panel->dim_info;
-#ifdef CONFIG_PANEL_SMART_DIMMING
-	struct SmtDimInfo *smart_dimming_info = (struct SmtDimInfo *)panel->smart_dim_info;
-#endif
 
 	if (dimming_info == NULL) {
 		dsim_err("%s : dimming info is NULL\n", __func__);
@@ -184,18 +173,8 @@ static unsigned char *get_elvss_from_index(struct dsim_device *dsim, int index, 
 	}
 
 	if(caps)
-#ifdef CONFIG_PANEL_SMART_DIMMING
-		if (panel->smart_on)
-			return (unsigned char *)smart_dimming_info[index].elvCaps;
-		else
-#endif
 		return (unsigned char *)dimming_info[index].elvCaps;
 	else
-#ifdef CONFIG_PANEL_SMART_DIMMING
-		if (panel->smart_on)
-			return (unsigned char *)smart_dimming_info[index].elv;
-		else
-#endif
 		return (unsigned char *)dimming_info[index].elv;
 
 get_elvess_err:
@@ -413,28 +392,17 @@ static int low_level_set_brightness(struct dsim_device *dsim ,int force)
 
 	dsim_panel_gamma_ctrl(dsim);
 
-#ifdef CONFIG_PANEL_SMART_DIMMING
-	if (panel->smart_on)
-		dsim_write_hl_data(dsim, S6E3HF4_AID, ARRAY_SIZE(S6E3HF4_AID));
-	else
-#endif
 	dsim_panel_aid_ctrl(dsim);
 
 	dsim_panel_set_elvss(dsim);
 
 #ifdef CONFIG_PANEL_SMART_DIMMING
-	if (panel->smart_on)
-		dsim_write_hl_data(dsim, S6E3HF4_VINT, ARRAY_SIZE(S6E3HF4_VINT));
-	else
-#endif
+	if (dsim_write_hl_data(dsim, S6E3HF4_VINT_SET, ARRAY_SIZE(S6E3HF4_VINT_SET)) < 0)
+		dsim_err("%s : failed to write S6E3HF4_VINT_SET\n", __func__);
+#else
 	dsim_panel_set_vint(dsim, force);
 #endif
 
-#ifdef CONFIG_PANEL_SMART_DIMMING
-	if (panel->smart_on)
-		dsim_write_hl_data(dsim, HF4_A3_IRC_off, ARRAY_SIZE(HF4_A3_IRC_off));
-	else
-#endif
 	dsim_panel_irc_ctrl(dsim);
 
 	if (dsim_write_hl_data(dsim, SEQ_GAMMA_UPDATE, ARRAY_SIZE(SEQ_GAMMA_UPDATE)) < 0)
