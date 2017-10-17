@@ -11,20 +11,13 @@ on property:sys.boot_completed=1
     start initd
     start wakelock
 
-service kernelinit /sbin/kernelinit.sh
+service kernelinit /sbin/kernelconf.sh
     user root
     seclabel u:r:init:s0
     oneshot
     disabled
 
 service initd /sbin/initd.sh
-    class late_start
-    user root
-    seclabel u:r:init:s0
-    oneshot
-    disabled
-
-service wakelock /sbin/wakelock.sh
     class late_start
     user root
     seclabel u:r:init:s0
