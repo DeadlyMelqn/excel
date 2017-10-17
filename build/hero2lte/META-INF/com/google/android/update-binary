@@ -46,7 +46,7 @@ abort() {
 
 ui_print "========================================";
 ui_print "Intended to be Installed on AOSP ROMS";
-ui_print "Version 1.3.0 Beta";
+ui_print "Version 1.3.3 Beta";
 ui_print "Based on DQIC";
 ui_print " ";
 
