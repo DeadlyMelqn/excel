@@ -6,18 +6,10 @@ OUTFD=/proc/self/fd/$2;
 ZIPFILE="$3";
 DIR=`dirname "$ZIPFILE"`;
 
-ui_print " ";
-ui_print " ********                          **";
-ui_print "/**/////                          /**";
-ui_print "/**       **   **  *****   *****  /**";
-ui_print "/******* //** **  **///** **///** /**";
-ui_print "/**////   //***  /**  // /******* /**";
-ui_print "/**        **/** /**   **/**////  /**";
-ui_print "/******** ** //**//***** //****** ***";
-ui_print "//////// //   //  /////   ////// /// ";
+ui_print "Keeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeermit";
 ui_print "========================================";
 ui_print "Intended to be Installed on AOSP ROMS";
-ui_print "Version 1.1.0 Beta";
+ui_print "Version 1.3.0 Beta";
 ui_print "Based on DQIC";
 ui_print " ";
 
@@ -98,6 +90,7 @@ if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.devicecheck)" == 1 ]; then
 fi;
 
 ui_print "Installing kernel...";
+ui_print "..";
 for i in $($bb --list); do
   $bb ln -s $bb /tmp/anykernel/bin/$i;
 done;
@@ -123,11 +116,18 @@ debugging;
 
 if [ "$(file_getprop /tmp/anykernel/anykernel.sh do.cleanup)" == 1 ]; then
   cleanup;
+  ui_print " ";
+  ui_print "Cleaning up..";
 fi;
 
 umount /system;
 umount /data 2>/dev/null;
 ui_print " ";
-ui_print "========================================";
+ui_print "====================================================";
 ui_print "Thanks to everyone that helped me out!";
+ui_print " - Kylothow                       - djb77";
+ui_print " - Morogoku                       - Farovitus";
+ui_print " - Tkkg1994                       - Testers";
+ui_print "And everyone who contributed in some way or another";
+ui_print " ";
 ui_print "Done! Enjoy";

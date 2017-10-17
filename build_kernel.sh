@@ -15,8 +15,8 @@
 # GNU General Public License for more details.
 #
 
-KERNEL_NAME="Excel_Kernel"
-KERNEL_VERSION="1.1.0"
+KERNEL_NAME="Kermit_Kernel"
+KERNEL_VERSION="1.3.0"
 KERNEL_REVISION="0"
 KERNEL_BETA="1"
 

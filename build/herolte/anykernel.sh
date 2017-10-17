@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() {
-kernel.string=Excel Kernel by Yuv
+kernel.string=Kermit Kernel by Yuvch122 @ xda-developers
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
